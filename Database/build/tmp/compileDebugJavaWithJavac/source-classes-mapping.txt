@@ -1,0 +1,20 @@
+com/example/database/DaoMaster.java
+ com.example.database.DaoMaster
+ com.example.database.DaoMaster$DevOpenHelper
+ com.example.database.DaoMaster$OpenHelper
+com/example/database/GoodsBeanDao.java
+ com.example.database.GoodsBeanDao
+ com.example.database.GoodsBeanDao$Properties
+com/example/database/GreenDaoManager.java
+ com.example.database.GreenDaoManager
+com/example/database/GoodsBean.java
+ com.example.database.GoodsBean
+com/example/database/BuildConfig.java
+ com.example.database.BuildConfig
+com/example/database/UserDao.java
+ com.example.database.UserDao
+ com.example.database.UserDao$Properties
+com/example/database/DaoSession.java
+ com.example.database.DaoSession
+com/example/database/User.java
+ com.example.database.User
