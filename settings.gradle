@@ -2,3 +2,6 @@ include ':mvvm_library'
 include ':DI'
 rootProject.name = "S2onegroup"
 include ':app'
+include ':Log'
+include ':ARouter'
+include ':SP'
