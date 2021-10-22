@@ -1,8 +1,9 @@
+package com.example.net;
+
 import android.text.TextUtils;
 import android.util.Log;
 
 
-import com.example.net.BuildConfig;
 import com.example.net.api.TokenApi;
 import com.example.net.common.Config;
 import com.example.net.protocol.TokenRespEntry;
