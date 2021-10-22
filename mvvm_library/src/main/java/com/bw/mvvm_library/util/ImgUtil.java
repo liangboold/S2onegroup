@@ -1,4 +1,4 @@
-package com.bw.mvvm_library;
+package com.bw.mvvm_library.util;
 
 import android.content.Context;
 import android.widget.ImageView;
@@ -11,7 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
  * @ClassName ImgUtil
  * @Description TODO
  * @Author 康泽林
- * @Date 2021/10/13 19:09
+ * @Date 2021/10/15 19:09
  * @Version 1.0
  */
 public class ImgUtil {
