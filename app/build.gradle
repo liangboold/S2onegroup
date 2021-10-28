@@ -26,15 +26,28 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
-
+    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer:v8.1.5-jitpack'//gsyVideoPlayer依赖
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'//万能适配器
+    implementation 'com.lzy.net:okgo:3.0.4'//OkGo网络框架
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'//Retrofit依赖
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'//RxJava依赖
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+    implementation 'com.blankj:utilcode:1.30.6'//判断网络是否连接
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation project(path: ':mvvm_library')
+    implementation project(path: ':Net')
+    implementation project(path: ':DI')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

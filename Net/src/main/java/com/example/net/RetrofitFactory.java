@@ -47,9 +47,8 @@ public class RetrofitFactory {
 
     public Retrofit createRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BUILD_TYPE)
+                .baseUrl("http://123.56.232.18:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addCallAdapterFactory(LiveDataCallAdapterFactory.create())
                 .client(createOkHttp())
                 .build();

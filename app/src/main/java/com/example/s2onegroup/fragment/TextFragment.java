@@ -1,66 +1,80 @@
 package com.example.s2onegroup.fragment;
 
-import android.os.Bundle;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.blankj.utilcode.util.GsonUtils;
+import com.bw.mvvm_library.repository.BaseRepository;
+import com.bw.mvvm_library.util.ImgUtil;
+import com.bw.mvvm_library.view.BaseMVVMFragment;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.net.protocol.BaseRespEntry;
+import com.example.s2onegroup.BR;
 import com.example.s2onegroup.R;
+import com.example.s2onegroup.bean.TextBean;
+import com.example.s2onegroup.databinding.TextF;
+import com.example.s2onegroup.viewmodel.TextViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TextFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TextFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class TextFragment extends BaseMVVMFragment<TextViewModel, TextF> {
+    ArrayList<TextBean.TextOneBean> textOneBeans = new ArrayList<>();
 
-    public TextFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TextFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TextFragment newInstance(String param1, String param2) {
-        TextFragment fragment = new TextFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    protected void initEvent() {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    protected void loadData() {
+        requestData();
+        mBinding.textRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    private void requestData() {
+//        mViewModel.baseRespEntryLiveData().observe(this, new Observer<BaseRespEntry<TextBean>>() {
+//            @Override
+//            public void onChanged(BaseRespEntry<TextBean> textBeanBaseRespEntry) {
+//                System.out.println(textBeanBaseRespEntry);
+//            }
+//        });
+    }
+
+    public class MyText extends BaseQuickAdapter<TextBean.TextOneBean, BaseViewHolder>{
+
+        public MyText(@Nullable List<TextBean.TextOneBean> data) {
+            super(R.layout.text_item, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, TextBean.TextOneBean item) {
+            helper.setText(R.id.name,item.getAuthor().getName());
+            helper.setText(R.id.feeds_text,item.getFeeds_text());
+            ImgUtil.imgLoadCircle(getActivity(),item.getAuthor().getAvatar(),helper.getView(R.id.avatar));
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_text, container, false);
+    protected TextViewModel createViewModel() {
+        return new TextViewModel(this);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_text;
+    }
+
+    @Override
+    protected void prepareSetVars(HashMap mMap) {
+        mMap.put(BR.TexTF,this);
+    }
+
+    @Override
+    protected void injectCompoent() {
+
     }
 }

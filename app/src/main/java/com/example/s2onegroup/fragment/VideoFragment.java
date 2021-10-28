@@ -1,66 +1,82 @@
 package com.example.s2onegroup.fragment;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import com.bw.mvvm_library.util.ImgUtil;
+import com.bw.mvvm_library.view.BaseMVVMFragment;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.net.protocol.BaseRespEntry;
+import com.example.s2onegroup.BR;
 import com.example.s2onegroup.R;
+import com.example.s2onegroup.bean.VideoBean;
+import com.example.s2onegroup.databinding.VideoF;
+import com.example.s2onegroup.viewmodel.VideoViewModel;
+import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link VideoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class VideoFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class VideoFragment extends BaseMVVMFragment<VideoViewModel, VideoF> {
+    ArrayList<VideoBean.VideoOneBean> videoOneBeans = new ArrayList<>();
+    @Override
+    protected void initEvent() {
 
-    public VideoFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment VideoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static VideoFragment newInstance(String param1, String param2) {
-        VideoFragment fragment = new VideoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    protected void loadData() {
+        requestData();
+        mBinding.VideoRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    private void requestData() {
+//        mViewModel.baseRespEntryLiveData().observe(this, new Observer<BaseRespEntry<VideoBean>>() {
+//            @Override
+//            public void onChanged(BaseRespEntry<VideoBean> videoBeanBaseRespEntry) {
+//                System.out.println(videoBeanBaseRespEntry);
+//            }
+//        });
+    }
+
+    public class MyVideo extends BaseQuickAdapter<VideoBean.VideoOneBean, BaseViewHolder> {
+
+        public MyVideo(@Nullable List<VideoBean.VideoOneBean> data) {
+            super(R.layout.video_item, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, VideoBean.VideoOneBean item) {
+            helper.setText(R.id.name,item.getAuthor().getName());
+            StandardGSYVideoPlayer gsy = helper.getView(R.id.gsy);
+            gsy.setUp(item.getUrl(),true,null);
+            gsy.startPlayLogic();
+            ImgUtil.imgLoadCircle(getActivity(),item.getAuthor().getAvatar(),helper.getView(R.id.avatar));
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_video, container, false);
+    protected void prepareSetVars(HashMap<Integer, Object> mMap) {
+        mMap.put(BR.VideOF,this);
+    }
+
+    @Override
+    protected VideoViewModel createViewModel() {
+        return new VideoViewModel(this);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_video;
+    }
+
+    @Override
+    protected void injectCompoent() {
+
     }
 }
